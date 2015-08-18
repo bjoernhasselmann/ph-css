@@ -997,6 +997,32 @@ try{
 }
 }
 
+void stylePageRuleDeclaration() : {}
+{
+try{
+  ( 
+   	unknownRule()
+   	( <S> )*
+  )
+  |
+  (
+	  property()
+	  <COLON>
+	  ( <S> )*
+	  /* Was before version 4 optional ->
+	     to handle e.g. "background-color:;"
+	     Rule: ( expr() )? */
+	  expr()
+	  ( important() )?
+  )
+} catch (ParseException ex) {
+  if (m_bBrowserCompliantMode)
+    browserCompliantSkipDecl ();
+  else  
+    throw ex;
+}
+}
+
 CSSNode styleDeclarationList() : {}
 {
   ( <S> )*
@@ -1008,11 +1034,36 @@ CSSNode styleDeclarationList() : {}
   { return jjtThis; }
 }
 
+CSSNode stylePageRuleDeclarationList() : {}
+{
+  ( <S> )*
+  ( stylePageRuleDeclaration() )?
+  ( <SEMICOLON>
+	  ( <S> )*
+	  ( stylePageRuleDeclaration() )?
+  )*
+  { return jjtThis; }
+}
+
 void styleDeclarationBlock() #void : {}
 {
   <LBRACE>
 try{
   styleDeclarationList()
+  <RBRACE>
+} catch (ParseException ex) {
+  if (m_bBrowserCompliantMode)
+    browserCompliantSkip ();
+  else  
+    errorSkipTo (ex, RBRACE);
+}
+}
+
+void stylePageRuleDeclarationBlock() #void : {}
+{
+  <LBRACE>
+try{
+  stylePageRuleDeclarationList()
   <RBRACE>
 } catch (ParseException ex) {
   if (m_bBrowserCompliantMode)
@@ -1148,7 +1199,7 @@ void pageRule() : {}
   ( pseudoPage()
     ( <S> )*
   )?
-  styleDeclarationBlock()
+  stylePageRuleDeclarationBlock()
 }
 
 //

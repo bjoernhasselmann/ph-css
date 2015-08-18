@@ -1,0 +1,13 @@
+@page {
+	size: A4;
+	margin: 30mm 20mm 15mm 20mm;
+	background-image: url('resource:/manual/images/background.svg');
+	@bottom-right{content:element(footer);}
+}
+
+@page:first{
+	size: A4;
+	margin: 30mm 20mm 20mm 20mm;
+	background: none;
+	@bottom-right{content:""}
+}

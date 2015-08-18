@@ -19,14 +19,19 @@ package com.helger.css.parser;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.io.File;
+import java.io.IOException;
+
 import org.junit.Test;
 
+import com.helger.commons.charset.CCharset;
 import com.helger.commons.io.stream.NonBlockingStringReader;
 import com.helger.css.AbstractCSS30TestCase;
 import com.helger.css.ECSSVersion;
 import com.helger.css.decl.CascadingStyleSheet;
 import com.helger.css.decl.ICSSTopLevelRule;
 import com.helger.css.handler.CSSHandler;
+import com.helger.css.reader.CSSReader;
 
 /**
  * Test class for class {@link ParserCSS30}.
@@ -61,5 +66,16 @@ public final class ParserCSS30Test extends AbstractCSS30TestCase
 
     for (final ICSSTopLevelRule aTopLevelRule : aCSS.getAllFontFaceRules ())
       assertTrue (aCSS.removeRule (aTopLevelRule).isChanged ());
+  }
+
+  @Test
+  public void testPageMemberRules () throws ParseException, IOException
+  {
+
+    File aFile = new File ("src/test/resources/testfiles/css30/good/pagemembers.css");
+    final String sKey = aFile.getAbsolutePath ();
+    final CascadingStyleSheet aCSS = CSSReader.readFromFile (aFile, CCharset.CHARSET_UTF_8_OBJ, ECSSVersion.LATEST);
+    assertNotNull (aCSS);
+    
   }
 }
