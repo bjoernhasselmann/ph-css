@@ -127,7 +127,7 @@ public class CSSUnknownRule implements ICSSTopLevelRule, ICSSSourceLocationAware
         aSB.append (aSettings.getIndent (nIndentLevel));
       aSB.append (m_sBody);
       if (!bOptimizedOutput)
-        aSB.append (aSettings.getIndent (nIndentLevel));
+        aSB.append ('\n' + aSettings.getIndent (nIndentLevel-1));
       aSB.append ('}');
       if (!bOptimizedOutput)
         aSB.append ('\n');

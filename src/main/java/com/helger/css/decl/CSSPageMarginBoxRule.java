@@ -1,9 +1,11 @@
 package com.helger.css.decl;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.css.CSSSourceLocation;
+import com.helger.css.ICSSWriterSettings;
 /**
  * Rules that apply to the page-margin boxes.<br>
  * 
@@ -43,6 +45,15 @@ public class CSSPageMarginBoxRule extends CSSUnknownRule implements ICSSPageMemb
     CSSSourceLocation originalSource = this.getSourceLocation ();
     clonedRule.setSourceLocation (new CSSSourceLocation (originalSource.getFirstTokenArea (), originalSource.getLastTokenArea ()));
     return clonedRule;
+  }
+  
+  @Override
+  @Nonnull
+  @Nonempty
+  public String getAsCSSString(@Nonnull final ICSSWriterSettings aSettings, @Nonnegative final int nIndentLevel){
+    final StringBuilder aSB = new StringBuilder (); 
+    aSB.append (aSettings.getIndent (nIndentLevel+1));
+    return aSB.append (super.getAsCSSString (aSettings, nIndentLevel+2)).toString ();
   }
   
 }

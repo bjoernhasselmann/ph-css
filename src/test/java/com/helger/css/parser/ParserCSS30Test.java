@@ -20,6 +20,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 
 import org.junit.Test;
@@ -32,6 +33,8 @@ import com.helger.css.decl.CascadingStyleSheet;
 import com.helger.css.decl.ICSSTopLevelRule;
 import com.helger.css.handler.CSSHandler;
 import com.helger.css.reader.CSSReader;
+import com.helger.css.writer.CSSWriter;
+import com.helger.css.writer.CSSWriterSettings;
 
 /**
  * Test class for class {@link ParserCSS30}.
@@ -76,6 +79,17 @@ public final class ParserCSS30Test extends AbstractCSS30TestCase
     final String sKey = aFile.getAbsolutePath ();
     final CascadingStyleSheet aCSS = CSSReader.readFromFile (aFile, CCharset.CHARSET_UTF_8_OBJ, ECSSVersion.LATEST);
     assertNotNull (aCSS);
+
+    CSSWriter cssWriter = new CSSWriter (new CSSWriterSettings (ECSSVersion.LATEST));
+    cssWriter.setWriteHeaderText (false);
+    String output = cssWriter.getCSSAsString (aCSS);
+
+    File out = new File ("src/test/resources/testfiles/css30/pdf_output.css");
+    out.createNewFile ();
+    FileWriter writer = new FileWriter (out);
+    writer.write (output);
+    writer.flush ();
+    writer.close ();
     
   }
 }

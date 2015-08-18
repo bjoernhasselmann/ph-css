@@ -1116,7 +1116,7 @@ final class CSSNodeToDomainObject
     CSSUnknownRule ret = null;
     
     final CSSNode aParent = (CSSNode) aNode.jjtGetParent ();
-    if(aParent != null && ECSSNodeType.PAGERULE.isNode (aParent, m_eVersion)){
+    if(aParent != null && ECSSNodeType.STYLEPAGERULEDECLARATION.isNode (aParent, m_eVersion)){
       ECSSPageMarginBoxRuleDeclarations eMarginBoxRuleType = ECSSPageMarginBoxRuleDeclarations.getValueByDeclarationIgnoreCase (sRuleDeclaration);
       if(eMarginBoxRuleType == null){
         s_aLogger.error ("Unsupported page-rule child: " +

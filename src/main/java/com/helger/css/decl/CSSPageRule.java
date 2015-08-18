@@ -216,17 +216,21 @@ public class CSSPageRule implements ICSSTopLevelRule, IHasCSSDeclarations, ICSSV
 
     if (StringHelper.hasText (m_sPseudoPage))
       aSB.append (' ').append (m_sPseudoPage);
-
-    aSB.append (m_aDeclarations.getAsCSSString (aSettings, nIndentLevel));
-    if (!bOptimizedOutput)
-      aSB.append ('\n');
     
+    aSB.append ("{");
+    if(!bOptimizedOutput)
+      aSB.append ("\n");
+    aSB.append (m_aDeclarations.getAsCSSString (aSettings, nIndentLevel, false));
+    
+    String sPrefix = "";
     for(ICSSPageMemberRule memRule : m_aPageMemberRules){
-      aSB.append (memRule.getAsCSSString (aSettings, nIndentLevel));
-      if (!bOptimizedOutput)
-        aSB.append ('\n');
+      aSB.append (sPrefix + memRule.getAsCSSString (aSettings, nIndentLevel));
+      if (!bOptimizedOutput){
+        sPrefix = "\n".intern();
+      }
     }
     
+    aSB.append ("}");
     if (!bOptimizedOutput)
       aSB.append ('\n');
     
