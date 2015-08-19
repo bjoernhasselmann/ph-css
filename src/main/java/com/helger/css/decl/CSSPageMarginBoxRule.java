@@ -7,7 +7,7 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.css.CSSSourceLocation;
 import com.helger.css.ICSSWriterSettings;
 /**
- * Rules that apply to the page-margin boxes.<br>
+ * Rules that apply to the page-margin boxes within a {@link CSSPageRule}<br>
  * 
  * Example:<br>
  * <pre>
@@ -25,15 +25,6 @@ public class CSSPageMarginBoxRule extends CSSUnknownRule implements ICSSPageMemb
   public CSSPageMarginBoxRule (@Nonnull @Nonempty String sDeclaration)
   {
     super (sDeclaration);
-  }
-
-  private final ECSSPageMemberRuleType type = ECSSPageMemberRuleType.MARGIN_BOX_RULE;
-  
-  @Override
-  @Nonnull
-  public ECSSPageMemberRuleType getType ()
-  {
-    return type;
   }
 
   @Override

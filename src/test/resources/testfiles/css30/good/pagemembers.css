@@ -3,6 +3,7 @@
 	margin: 30mm 20mm 15mm 20mm;
 	background-image: url('resource:/manual/images/background.svg');
 	@bottom-right{content:element(footer);}
+	@unknown-rule{content:'some content'}
 }
 
 @page:first{

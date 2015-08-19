@@ -11,11 +11,5 @@ import com.helger.css.ICSSWriteable;
  */
 public interface ICSSPageMemberRule extends ICSSWriteable, ICloneable <ICSSPageMemberRule>
 {
-  
-  /**
-   * The type of the {@link ICSSPageMemberRule} instance.
-   * 
-   * @return the type
-   */
-  public ECSSPageMemberRuleType getType();
+  /* empty */
 }

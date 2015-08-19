@@ -19,9 +19,11 @@ package com.helger.css.parser;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 import org.junit.Test;
 
@@ -33,6 +35,7 @@ import com.helger.css.decl.CascadingStyleSheet;
 import com.helger.css.decl.ICSSTopLevelRule;
 import com.helger.css.handler.CSSHandler;
 import com.helger.css.reader.CSSReader;
+import com.helger.css.reader.errorhandler.LoggingCSSParseErrorHandler;
 import com.helger.css.writer.CSSWriter;
 import com.helger.css.writer.CSSWriterSettings;
 
@@ -75,21 +78,25 @@ public final class ParserCSS30Test extends AbstractCSS30TestCase
   public void testPageMemberRules () throws ParseException, IOException
   {
 
+    CSSReader.setDefaultParseErrorHandler (new LoggingCSSParseErrorHandler ());
+    
     File aFile = new File ("src/test/resources/testfiles/css30/good/pagemembers.css");
     final String sKey = aFile.getAbsolutePath ();
-    final CascadingStyleSheet aCSS = CSSReader.readFromFile (aFile, CCharset.CHARSET_UTF_8_OBJ, ECSSVersion.LATEST);
+    final CascadingStyleSheet aCSS = CSSReader.readFromFile (aFile, CCharset.CHARSET_UTF_8_OBJ, ECSSVersion.CSS30);
     assertNotNull (aCSS);
 
-    CSSWriter cssWriter = new CSSWriter (new CSSWriterSettings (ECSSVersion.LATEST));
+    CSSWriter cssWriter = new CSSWriter (new CSSWriterSettings (ECSSVersion.CSS30));
     cssWriter.setWriteHeaderText (false);
     String output = cssWriter.getCSSAsString (aCSS);
-
-    File out = new File ("src/test/resources/testfiles/css30/pdf_output.css");
-    out.createNewFile ();
-    FileWriter writer = new FileWriter (out);
-    writer.write (output);
-    writer.flush ();
-    writer.close ();
     
+    FileInputStream fin =  new FileInputStream("src/test/resources/testfiles/css30/good/pagemembers_result.css");
+    BufferedReader myInput = new BufferedReader(new InputStreamReader(fin));
+    StringBuilder sb = new StringBuilder();
+    String line;
+    while ((line = myInput.readLine()) != null) {  
+               sb.append(line + "\n");
+    }
+    
+    assertTrue(output.equals (sb.toString ()));
   }
 }

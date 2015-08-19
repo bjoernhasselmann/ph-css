@@ -76,9 +76,8 @@ public class CSSDeclarationContainer extends CSSDeclarationList
   public String getAsCSSString (@Nonnull final ICSSWriterSettings aSettings, @Nonnegative final int nIndentLevel, final boolean useBrackets){
     if(useBrackets){
       return this.getAsCSSString (aSettings, nIndentLevel);
-    } else {
-      return super.getAsCSSString (aSettings, nIndentLevel);
-    }
+    } 
+    return super.getAsCSSString (aSettings, nIndentLevel);
   }
   
 }
